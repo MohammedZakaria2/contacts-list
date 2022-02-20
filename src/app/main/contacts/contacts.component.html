@@ -1,0 +1,73 @@
+<div class=" page-layout blank " fusePerfectScrollbar>
+    <div class=" header">
+        <div class="header_meta">
+            <h2>{{'CONTACTS.HELLO' | translate}}</h2>
+            <p>{{length}} {{'CONTACTS.HELLO' | translate}}</p>
+        </div>
+        <div class="header_control">
+            <input [ngModel]="term" (ngModelChange)="search($event)" class="header_input" type="text" name="search">
+            <button (click)="openForm('add')" class="header_button btn">
+                <p> {{'CONTACTS.ADD' | translate }}</p>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="isFormOpen">
+        <form class="contact_form" (ngSubmit)="onSubmit()" [formGroup]="contactForm">
+            <div class="form-group">
+                <label class="input_label" for="name">{{ 'CONTACTS.Name' | translate}}</label>
+                <input formControlName="name" name="name" class="input" type="text">
+            </div>
+            <div class="form-group">
+                <label class="input_label" for="phone">{{ 'CONTACTS.Phone' | translate}}</label>
+                <input formControlName="phone" class="input" name="phone" type="text">
+            </div>
+            <div class="form-group">
+                <label class="input_label" for="email">{{ 'CONTACTS.Email' | translate}}</label>
+                <input formControlName="email" name="email" class="input" type="email">
+            </div>
+            <div class="buttons_control">
+
+                <button [disabled]="contactForm.invalid" class="form-group_button submit btn" type="submit">
+                    <p *ngIf="formType === 'edit'">{{ 'CONTACTS.Edit' | translate}}</p>
+                    <p *ngIf="formType === 'add'">{{ 'CONTACTS.Add' | translate }}</p>
+                </button>
+                <button class="form-group_button cancel btn" (click)="closeForm()">
+                    <p>{{ 'CONTACTS.Cancel' | translate }}</p>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="contact_collection" *ngFor="let contact of contacts">
+        <p>{{contact.char}}</p>
+        <ul class="contact_list">
+            <li class="contact_item" *ngFor="let item of contact.items">
+                <div *ngIf="confirmModal === item.id" class="inner_modal">
+                    <div class="modal_buttons btn ">
+                        <button class="control_button delete btn" (click)="closeModal()">
+                            <p>{{ 'CONTACTS.Cancel' | translate }}</p>
+                        </button>
+                        <button class="control_button edit btn" (click)="confirmDelete()">
+                            <p>{{ 'CONTACTS.Confirm' | translate }}</p>
+                        </button>
+                    </div>
+                </div>
+                <div class="contact_item_details">
+                    <div class="contact_item_image">
+                        <img src="https://i.pravatar.cc/50?img={{item.id}}" alt="">
+                    </div>
+                    <a class="contact_item_name" [routerLink]="['/details', item.id]" routerLinkActive="active">
+                        {{item.name}}
+                    </a>
+                </div>
+                <div class="control">
+                    <button class="control_button delete btn" (click)="onDeleteContact(item.id)">
+                        <p>{{ 'CONTACTS.Delete' | translate }}</p>
+                    </button>
+                    <button class="control_button edit btn" (click)="editContact(item.id)">
+                        <p>{{ 'CONTACTS.Edit' | translate }}</p>
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
