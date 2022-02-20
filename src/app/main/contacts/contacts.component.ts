@@ -23,6 +23,7 @@ export class ContactsComponent implements OnInit {
     public formType = "";
     public onDeleteContactId = null;
     public confirmModal = false;
+    public term = "";
 
     contactForm = new FormGroup({
         id: new FormControl(""),
