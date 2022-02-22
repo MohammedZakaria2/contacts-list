@@ -24,10 +24,7 @@ export class ContactsComponent implements OnInit {
     public onDeleteContactId = null;
     public confirmModal = false;
     public term = "";
-<<<<<<< HEAD
-=======
     public isLoading = false;
->>>>>>> gh-pages
 
     contactForm = new FormGroup({
         id: new FormControl(""),
