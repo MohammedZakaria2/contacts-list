@@ -30,7 +30,11 @@ export class ContactsComponent implements OnInit {
         id: new FormControl(""),
         name: new FormControl("", [Validators.required]),
         email: new FormControl("", [Validators.required]),
-        phone: new FormControl("", [Validators.required]),
+        phone: new FormControl("", [
+            Validators.required,
+            ,
+            Validators.pattern("[0-9 ]{11}"),
+        ]),
     });
 
     get name() {

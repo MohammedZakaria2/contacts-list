@@ -16,19 +16,38 @@
     <div *ngIf="isFormOpen">
         <form class="contact_form" (ngSubmit)="onSubmit()" [formGroup]="contactForm">
             <div class="form-group">
-                <label class="input_label" for="name">{{ 'CONTACTS.Name' | translate}}</label>
+                <label class="input_label">{{ 'CONTACTS.Name' | translate}}</label>
                 <input formControlName="name" name="name" class="input" type="text">
+                <div *ngIf="(name.touched || contactForm.submitted) &&
+                name.invalid" class="invalid-feedback input_error">
+                    <div *ngIf="name.errors">
+                        Please enter valid name.
+                    </div>
+                </div>
             </div>
             <div class="form-group">
-                <label class="input_label" for="phone">{{ 'CONTACTS.Phone' | translate}}</label>
+                <label class="input_label">{{ 'CONTACTS.Phone' | translate}}</label>
                 <input formControlName="phone" class="input" name="phone" type="text">
+                <div *ngIf="(phone.touched || contactForm.submitted) &&
+                phone.invalid" class="invalid-feedback input_error">
+                    <div *ngIf="phone.errors">
+                        Please enter valid phone number.
+                    </div>
+                </div>
             </div>
             <div class="form-group">
-                <label class="input_label" for="email">{{ 'CONTACTS.Email' | translate}}</label>
-                <input formControlName="email" name="email" class="input" type="email">
+                <label class="input_label">{{ 'CONTACTS.Email' | translate}}</label>
+                <input formControlName="email" name="email" email class="input" type="email">
+                <div *ngIf="(email.touched || contactForm.submitted) &&
+                email.invalid" class="invalid-feedback input_error">
+                    <div *ngIf="email.errors">
+                        Please enter valid email address.
+                    </div>
+                </div>
             </div>
-            <div class="buttons_control">
 
+
+            <div class="buttons_control">
                 <button [disabled]="contactForm.invalid" class="form-group_button submit btn" type="submit">
                     <p *ngIf="formType === 'edit'">{{ 'CONTACTS.Edit' | translate}}</p>
                     <p *ngIf="formType === 'add'">{{ 'CONTACTS.Add' | translate }}</p>
