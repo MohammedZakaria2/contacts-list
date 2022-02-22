@@ -224,3 +224,12 @@
 .btn:hover {
     opacity: 0.8;
 }
+
+.loading_message {
+    color: #f3b034;
+    font-weight: 700 !important;
+    font-size: 2rem;
+    position: absolute;
+    right: 50%;
+    transform: translate(50%, -100%);
+}
