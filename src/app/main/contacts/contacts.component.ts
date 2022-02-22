@@ -24,6 +24,10 @@ export class ContactsComponent implements OnInit {
     public onDeleteContactId = null;
     public confirmModal = false;
     public term = "";
+<<<<<<< HEAD
+=======
+    public isLoading = false;
+>>>>>>> gh-pages
 
     contactForm = new FormGroup({
         id: new FormControl(""),
@@ -62,29 +66,42 @@ export class ContactsComponent implements OnInit {
     }
 
     fetchContacts() {
+        this.isLoading = true;
         this.contactsService.getContacts().subscribe((data) => {
             this.extraArrayForEditingPurposesContacts = data;
             this.setUpList(data);
+            this.isLoading = false;
         });
     }
 
     search(term: string) {
+        this.isLoading = true;
+
         this.contactsService.searchContacts(term).subscribe((data) => {
             this.setUpList(data);
+            this.isLoading = false;
         });
     }
 
     onSubmit() {
+        this.isLoading = true;
+
         if (this.formType === "add") {
             this.contactsService
                 .addContact(this.contactForm.value)
-                .subscribe((data) => this.onContactAdded(data));
+                .subscribe((data) => {
+                    this.onContactAdded(data);
+                    this.isLoading = false;
+                });
             this.emptyForm();
             this.closeForm();
         } else if (this.formType === "edit") {
             this.contactsService
                 .editContact(this.contactForm.value)
-                .subscribe((data) => this.onContactEdited(data));
+                .subscribe((data) => {
+                    this.onContactEdited(data);
+                    this.isLoading = false;
+                });
             this.emptyForm();
             this.closeForm();
         }
@@ -97,18 +114,24 @@ export class ContactsComponent implements OnInit {
 
     confirmDelete() {
         if (this.onDeleteContactId) {
+            this.isLoading = true;
             this.contactsService
                 .deleteContact(this.onDeleteContactId)
-                .subscribe(() => this.onContactDeleted(this.onDeleteContactId));
+                .subscribe(() => {
+                    this.onContactDeleted(this.onDeleteContactId);
+                    this.isLoading = false;
+                });
             this.closeModal();
         }
     }
 
     editContact(id: number) {
         this.openForm("edit");
-        this.contactsService
-            .getContact(id)
-            .subscribe((data) => this.setForm(data));
+        this.isLoading = true;
+        this.contactsService.getContact(id).subscribe((data) => {
+            this.setForm(data);
+            this.isLoading = false;
+        });
     }
 
     onContactAdded(contact: Contact) {

@@ -11,6 +11,8 @@
             </button>
         </div>
     </div>
+    <p class="loading_message" *ngIf="isLoading"> Loading...</p>
+
     <div *ngIf="isFormOpen">
         <form class="contact_form" (ngSubmit)="onSubmit()" [formGroup]="contactForm">
             <div class="form-group">
